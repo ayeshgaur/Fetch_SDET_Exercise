@@ -1,24 +1,61 @@
 package com.fetch.sdet.test;
 
+import java.awt.*;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Geoloc_utility {
-    private static final String base_url = "(https://openweathermap.org/api/geocoding-api";
-    private static final String get_by_name_endpoint = "/geo/1.0/zip?zip={zip code},{country code}&appid={API key}";
-    private static final String GET_BY_ZIPCODE_ENDPOINT = "/geo/1.0/direct?q={city name},{state code},{country code}&limit={limit}&appid={API key}";
+    private static final String API_KEY = "f897a99d971b5eef57be6fafa0d83239";
 
-    public static void main(String[] args){
-        try(Scanner scanner = new Scanner(System.in)){
-            // Input for option (1. by city, state name OR 2. by zipcode)
-            int option = scanner.nextInt();
-            scanner.nextLine();
+    public static void main(String[] args) {
+        if (args.length > 0) {
+            for (String inLoc : args) {
+                System.out.println(inLoc);
+                inLoc = inLoc.replaceAll("\\s+", "");
+                String zipCode = inLoc;
+                String regex = "\\d{5}(-\\d{4})?";
 
-            if(option == 1){
-                Scanner by_City_State_Name = new Scanner(System.in);
-                // provide city, state name
-                String city_state_name = by_City_State_Name.nextLine();
+                System.out.println("The zip code is: " + zipCode);
+                System.out.println("Is the above zip code valid? " + zipCode.matches(regex));
+                if (zipCode.matches(regex)) {
+                    fetchByGeoByZipCode(zipCode);
+
+                } else {
+                    fetchGeoByLocationName(inLoc);
+                }
             }
-
         }
+
+    }
+
+    private static void fetchGeoByLocationName(String locationName) {
+        HttpClient client = HttpClient.newHttpClient();
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("http://api.openweathermap.org/geo/1.0/direct?limit=1&appid=f897a99d971b5eef57be6fafa0d83239&q=" + locationName + ",US"))
+                .build();
+
+        client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+                .thenApply(HttpResponse::body)
+                .thenAccept(System.out::println)
+                .join();
+    }
+
+    private static void fetchByGeoByZipCode(String zipCode) {
+        HttpClient client = HttpClient.newHttpClient();
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("http://api.openweathermap.org/geo/1.0/zip?&appid=f897a99d971b5eef57be6fafa0d83239&zip=" + zipCode + ",US"))
+                .build();
+
+        client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+                .thenApply(HttpResponse::body)
+                .thenAccept(System.out::println)
+                .join();
     }
 }
