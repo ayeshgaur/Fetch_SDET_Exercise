@@ -1,13 +1,9 @@
 package com.fetch.sdet.test;
 
-import java.awt.*;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
 
 public class Geoloc_utility {
     private static final String API_KEY = "f897a99d971b5eef57be6fafa0d83239";
