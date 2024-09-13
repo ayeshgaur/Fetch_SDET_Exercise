@@ -7,7 +7,7 @@ import io.cucumber.java.en.When;
 import org.testng.Assert;
 
 
-public class Geolocation_by_name {
+public class GeolocValidationStepDef {
 String actualOutput = null;
 
     @Given("User accesses geoloc utility")
@@ -26,7 +26,6 @@ String actualOutput = null;
     public void user_gets_as_a_response_for_the_provided_location_by_name(String exptectedOutput) {
 
         System.out.println(actualOutput);
-        //JsonPath jsonPath= new JsonPath(actualOutput);
         Assert.assertEquals(actualOutput, exptectedOutput);
     }
 
