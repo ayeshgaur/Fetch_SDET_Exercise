@@ -1,10 +1,9 @@
-# GEOLOC UTILITY: 
-Geoloc utility uses openweather geocoding API. It takes the input as City name, State/ zipcode and returns information about the city with longitude, latitude, name, zipcode and any other necessary informtaion. 
+## Fetch GEO
 
-## Run Config: 
-To run the geoloc utility we can pass the city, state as path parameters from run configurations
-
+### Run Config
 ![image](https://github.com/user-attachments/assets/0f9cef82-1233-4480-99d3-cc9e33269d1c)
+
+![image](https://github.com/user-attachments/assets/1a0b887c-9be3-46d1-a16b-935d1fd2623b)
 
 # Test geoloc Utility
 TestNg runner with BDD- cucumber framework, is implemented to run scenarios for testing the geoloc utility.
