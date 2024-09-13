@@ -33,8 +33,6 @@ public class GeolocUtility {
         String zipCode = inLoc;
         String regex = "\\d{5}(-\\d{4})?";
 
-        System.out.println("The zip code is: " + zipCode);
-        System.out.println("Is the above zip code valid? " + zipCode.matches(regex));
         if (zipCode.matches(regex)) {
           return  fetchByGeoByZipCode(zipCode, API_KEY);
 
@@ -53,18 +51,14 @@ public class GeolocUtility {
         HttpClient client = HttpClient.newHttpClient();
         try {
             HttpRequest request = HttpRequest.newBuilder()
-                    //.uri(URI.create("http://api.openweathermap.org/geo/1.0/direct?limit=1&appid=f897a99d971b5eef57be6fafa0d83239&q=" + locationName + ",US"))
                     .uri(URI.create("http://api.openweathermap.org/geo/1.0/direct?limit=1&appid="+ API_KEY+ "&q=" + locationName + ",US"))
                     .build();
             String locationsResponse = client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
                     .thenApply(HttpResponse::body)
-                    //.thenAccept(System.out::println)
                     .join();
-            System.out.println(locationsResponse);
             return locationsResponse;
 
         } catch (Exception ex){
-            // we can also throw exception and handle in the calling class/method.
                 return ex.getClass().getSimpleName();
         }
     }
@@ -83,9 +77,7 @@ public class GeolocUtility {
 
         String locationsResponse = client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
                 .thenApply(HttpResponse::body)
-                //.thenAccept(System.out::println)
                 .join();
-        System.out.println(locationsResponse);
         return locationsResponse;
     }
 }
